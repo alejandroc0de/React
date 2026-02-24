@@ -1,0 +1,218 @@
+function UserGreeting(props){
+    if(props.isLoggedIn){
+        return <h2>Welcome {props.username}</h2>
+    }else {
+        return <h2> Pls log in to continue </h2>
+    }
+}
+
+//////////////////////////////////////////////
+
+function UserGreeting(props){
+
+    const greeting = <h2 className="welcome-message">Welcome {props.username}</h2>
+    const greetingLogin = <h2 className="loginPrompt"> Pls log in to continue </h2>
+
+
+
+    if(props.isLoggedIn){
+        return greeting
+    }else {
+        return greetingLogin
+    }
+}
+
+////////////////////////////////////////////// Sorting and map 
+function List (){
+
+    const fruits = [{name:"apple", calories:95, id :1}, 
+                    {name:"orange", calories:45, id:2},
+                    {name :"banana", calories: 105, id:3}, 
+                    {name: "piña", calories: 159, id:4 }];
+
+    fruits.sort((a,b) => a.name.localeCompare(b.name))  // Sort array by name
+    fruits.sort((a,b) => a.calories - b.calories)  // Sort by calories 
+
+    const lowCalFruit = fruits.filter(fruit => fruit.calories < 100 ); // filter only less than 100C
+    const highCalFruit = fruits.filter(fruit => fruit.calories > 100); // Filter +100
+
+    const listItems = fruits.map( fruit =>
+        <li key={fruit.id}>{fruit.name}, Calories:{fruit.calories}</li>);
+
+    return (
+        <ul>{listItems}</ul>
+    )
+
+}
+
+//////////////////////////////////////////////////////////
+Using a molde for list 
+
+
+    function App() {
+
+
+        const fruits = [{name:"apple", calories:95, id :1}, 
+                        {name:"orange", calories:45, id:2},
+                        {name :"banana", calories: 105, id:3}, 
+                        {name: "piña", calories: 159, id:4 }];
+
+        const vegetables = [{name:"potato", calories:915, id :5}, 
+                        {name:"celery", calories:15, id:6},
+                        {name :"corn", calories: 63, id:7}, 
+                        {name: "brocoli", calories: 50, id:8 }];
+
+    return(
+        <>
+        <List items = {fruits} categoria = "Fruits"/>
+        <List items = {vegetables} categoria = "Vegetables"/>
+        </>
+        
+    );
+}
+
+
+/////////////////////////////////////////////////////////////////////
+
+function App() {
+
+    const fruits = [{name:"apple", calories:95, id :1}, 
+                    {name:"orange", calories:45, id:2},
+                    {name :"banana", calories: 105, id:3}, 
+                    {name: "piña", calories: 159, id:4 }];
+
+    const vegetables = [{name:"potato", calories:915, id :5}, 
+                    {name:"celery", calories:15, id:6},
+                    {name :"corn", calories: 63, id:7}, 
+                    {name: "brocoli", calories: 50, id:8 }];
+
+  return(
+    <>
+      {fruits.length > 0 ? <List items = {fruits} categoria = "Fruits"/> : null}
+      {fruits.length > 0 && <List items = {vegetables} categoria = "Vegetables"/>} 
+    // Ese && hace que si el array esta vacio nada pase, no renderiza 
+    </>
+    
+  );
+}
+export default App
+
+
+///////////////////////////////////////////////////////////
+function Button(){
+
+    const handleClick = (event) => event.target.textContent = "OUCH"
+
+    return (
+        <button onClick={(event) => handleClick(event) }>Click meee</button>
+    );
+}
+export default Button
+
+///////////////////////////////////////////////////////////////
+
+HIDE OBJECT FROM SCREEN 
+
+function Profile(){
+    const imageUrl = './src/assets/images.jpeg'
+    const handleClick = (e) => e.target.style.display = "none"
+    
+    return (<img onClick={(e) => handleClick(e)} src={imageUrl}></img>);
+
+}
+
+/////////////////////////////////////////////////////////////
+
+STATE HOOKKKKKK
+
+function MyComponent(){
+
+    const [name, setName] = useState("Guest"); //Initial State Optional
+    const [age, setAge] = useState(0);
+
+    const updateName = () => {
+      setName("Daniel") // updates DOM 
+    }
+
+    const updateAge = () => {
+        setAge(age+1); // We can even increase by 2 or use booleans 
+    }
+
+    return (
+        <div>
+            <p>Name : {name}</p>
+            <button onClick={updateName}>Set Name </button>
+            <p>Age : {age} </p>
+            <button onClick={updateAge}>Increment Age </button>
+        </div>
+    )
+}
+
+
+///////////////////////////////////////////////////////////
+
+COUNTER PROGRAMMMMMMMMM
+
+import React, {useState} from "react"
+
+function Counter (){
+
+    const [count, setCount] = useState(0);
+
+    const increase = () => {
+        setCount(count+1)
+    }
+
+    const decrease = () => {
+        setCount(count-1)
+    }
+
+    const reset = () => {
+        setCount(0)
+    }
+    
+    return(
+        <>
+        <h3>{count}</h3>
+        <button onClick={increase}>Increment</button>
+        <button onClick={decrease}>Decrement</button>
+        <button onClick={reset}>Reset</button>
+        </>
+    )
+}
+
+MORE USE STATE -------------------------------------------
+
+function MyComponent(){
+
+
+    const [name, setName] = useState("Your name");
+    const [payment, setPayment] = useState()
+
+    function handleName(event){
+        setName(event.target.value)
+    }//Everytime it changes it is triggered
+
+    //Sin value={name}, si algo causa un re-render (por ejemplo otro estado cambia), 
+    // el input se resetea a vacío porque React redibuja el componente desde cero y 
+    // el input no tiene nada que lo ancle.
+
+    function handlePayment(event){
+        setPayment(event.target.value)
+    }
+    return(
+        <div>
+            <input value ={name} onChange={handleName} />
+            <p>Name: {name}</p>
+
+            <select value={payment} onChange={handlePayment} name="" id="">
+                <option value="Visa">Visa</option>
+                <option value="Mastercard">Mastercard</option>
+            </select>
+            <p> Payment: {payment}</p>
+        </div>
+    )
+}
+
+-----------------------------------------------------
+

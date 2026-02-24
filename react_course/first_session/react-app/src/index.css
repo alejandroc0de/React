@@ -1,11 +1,4 @@
-.Student{
-    font-family: monospace;
-    font-size: 2em;
-    padding: 10px;
-    border: 1px solid;
-    
-}
-
-.Student p{
-    margin: 0;
+.welcome-message{
+    background-color: aqua;
+    border-radius: 10px;
 }
