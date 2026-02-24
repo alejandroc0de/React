@@ -12,6 +12,7 @@ function App() {
       return
     }
     const newTodo = {
+      id: Date.now(),
       text : task,
       status : "Not Started"
     };
@@ -37,6 +38,9 @@ function App() {
     )
   }
 
+  // Guardamos las todos en 2 arrays diferentes 
+  const activeTodos = todos.filter(todo=>todo.status !=="Completed")
+  const completedTodos = todos.filter(todo=> todo.status === "Completed")
 
   return (
     <div>
@@ -44,8 +48,15 @@ function App() {
         <input type="text" ref={inputRef}/>
         <button onClick={handleSubmit}> Submit </button>
         <ul>
-          {todos.map((todo,index) => {
-            return <TodoItem key={index} todo={todo} index={index}></TodoItem>
+          {activeTodos.map((todo,index) => {
+            return <TodoItem key={todo.id} todo={todo} index={index}></TodoItem>
+          })}
+        </ul>
+
+        <h2>Completed</h2>
+        <ul>
+          {completedTodos.map((todo,index) => {
+            return <TodoItem key={todo.id} todo={todo} index={index}></TodoItem>
           })}
         </ul>
     </div>
