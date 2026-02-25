@@ -1,0 +1,40 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(154, 208, 255);
+}
+.stopwatch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    border: 5px solid black;
+    border-radius: 50px;
+    background-color: white;
+    padding: 30px;
+}
+
+.display{
+    font-size: 5rem;
+    font-family: monospace;
+    font-weight: bold;
+
+}
+
+.controls button {
+    font-size: 1.5 rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 5px;
+    min-width: 125px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.5s ease;
+
+}
+
+.start-button{
+    background-color: rgb(106, 162, 106);
+}
