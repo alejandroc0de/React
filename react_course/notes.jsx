@@ -367,3 +367,207 @@ function Component(){
         </div>
     )
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/// TODO-APP
+
+function App() {
+  const [todos, setNewTodo] = useState([])
+  const [todoName, setTodoName] = useState("")
+  const [todoDate, setNewDate] = useState("")
+  const [todoDescription, setNewDescription] = useState("")
+
+  function handleAddTodo(){
+    const newTodo = {name:todoName, fecha:todoDate, Description:todoDescription}
+    setNewTodo( (t)=> [...t, newTodo] )
+    setTodoName("")
+    setNewDate("")
+    setNewDescription("")
+  }
+
+  function handleAddName(event){
+    setTodoName(event.target.value)
+  }
+
+  function handleAddDate(event){
+    setNewDate(event.target.value)
+  }
+
+  function handleAddDescription(event){
+    setNewDescription(event.target.value)
+  }
+
+  function removeTodo(index){
+    setNewTodo(t => t.filter((objeto,posicion) => posicion !== index))
+  }
+  
+
+  return(
+    <div>
+      <h1>Welcome Todo App</h1>
+
+      <input value={todoName} onChange={handleAddName} type="text" placeholder='Enter To-do' /> <br />
+      <input value={todoDate} onChange={handleAddDate} type="date" placeholder='Enter Deadline' /> <br />
+      <input value={todoDescription} onChange={handleAddDescription} type="text" placeholder='Enter description' /> <br />
+      <button onClick={handleAddTodo}>Submit Task</button>
+
+      <div>
+        <h3>Todos Pending</h3>
+          <ul>
+            {todos.map((todo,index) => <li key={index} className='liTodo' onClick={() => {removeTodo(index)}}> {todo.name}, due for {todo.fecha} , description : {todo.Description} </li>)}
+          </ul>
+      </div>
+
+
+    </div>
+  )
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// useEffect() or Use Side Code
+//  useEffect(() => {}) : After every re-render // useEffect(() => {},[]) : Runs only on mount
+// useEffect(() => {},[value]): runs when mount + when value changes
+
+
+function App() {
+  const [count, setCount] = useState(0)
+
+  // Run when component App re renders
+  useEffect(()=> {
+    document.title = `count ${count}`
+  })
+
+  function addCount(){
+    setCount(c => c+1)
+  }
+  
+  return(
+    <div>
+      <p> Count: {count}</p>
+      <button onClick={addCount}>Add</button>
+    </div>
+  )
+}
+// But we can also do a clean up after each re render
+  window.addEventListener("resize",handleResize);
+  console.log("EVENT LISTENER ADDED")
+  // Aca por ejemplo si ponemos ese codigo, cada rerender añade un listener = 1k event listeners atm 
+
+  useEffect(() => {
+    window.addEventListener("resize",handleResize);
+    console.log("EVENT LISTENER ADDED")
+    // RETURN para quitar el event listener cuando se desmonte el componente 
+    return() => {
+      window.removeEventListener("resize", handleResize)
+      console.log("Event removed")
+    }
+  },[])
+  // Asi solo lo creamos 1 vez cuando el componente se monte, y no en cada re render
+  
+  ////// CLOCK PROGRAMMM ////////////////////////////////////////////////////////
+
+  function DigitalClock(){
+
+
+
+    const[time,setTime] = useState(new Date());
+
+
+    useEffect(()=> {
+        const intervalId = setInterval(()=> {
+            setTime(new Date());
+        },1000);
+
+        return()=>{
+            clearInterval(intervalId)
+        }
+    },[]);
+
+    function formatTime(){
+        let hours = time.getHours()
+        let minutes = time.getMinutes()
+        const seconds = time.getSeconds()
+        const meridiem = hours >=12 ? "PM" : "AM"
+
+        hours = hours % 12 || 12;
+
+        return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)} ${meridiem}`;
+    }
+
+    function padZero(number){   
+        return (number < 10 ? "0":"")+number
+    }
+
+    return(
+
+        <div className="clock-container">
+            <div className="clock">
+                <span>{formatTime()}</span>
+            </div>
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// USE CONTEXT TO PASS INFO 
+
+function componentA(){
+    // useContext lets us send values accross components 
+    // A is the provider component
+    const [user, setUser] = useState("Alejandro")
+    return(
+        <div className="box">
+            <h1>ComponentA</h1>
+            <h2>{`Hello ${user}`}</h2>
+            <UserContext.Provider value={user}>
+                <ComponentB/>
+            </UserContext.Provider>   
+        </div>
+    )
+    // We wrap the first child 
+}
+
+import { useContext } from "react"
+import { UserContext } from "./ComponentA" 
+// WE IMPORT THE EXPORT FROM A
+function componentC(){
+    const user = useContext(UserContext); // Then we declare it
+    return(
+        <div className="box">
+            <h1>ComponentC</h1>
+            <h2>bye{user}</h2>
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// USE REF, NOT RE RENDER 
+import { useEffect, useRef, useState } from 'react'
+import './App.css'
+
+function App() {
+  // useRef() = When you dont want a re render when something changes value
+  //            but you want it to "remember" that info
+
+  const inputRef = useRef(null);
+
+  // TO CHECK RE RENDERS 
+  useEffect(() => {
+    console.log("Component re-rendered")
+  })
+
+  // COMPONENT DOESNT RE RENDERRRR , NORMALLY IT WOULD es como un get doc by id 
+  function handleClick(){
+    inputRef.current.focus(); // we can even fchnage the input without render
+    inputRef.current.style.backgroundColor = "yellow" // doesnt re render 
+    
+  }
+  return(
+    <div>
+      <button onClick={handleClick}>Click me</button>
+      <input ref={inputRef} type="text" name="" id="" />
+    </div>
+  )
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
