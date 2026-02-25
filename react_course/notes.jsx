@@ -46,7 +46,7 @@ function List (){
 }
 
 //////////////////////////////////////////////////////////
-Using a molde for list 
+// Using a molde for list 
 
 
     function App() {
@@ -95,7 +95,6 @@ function App() {
     
   );
 }
-export default App
 
 
 ///////////////////////////////////////////////////////////
@@ -110,8 +109,7 @@ function Button(){
 export default Button
 
 ///////////////////////////////////////////////////////////////
-
-HIDE OBJECT FROM SCREEN 
+//HIDE OBJECT FROM SCREEN 
 
 function Profile(){
     const imageUrl = './src/assets/images.jpeg'
@@ -123,7 +121,7 @@ function Profile(){
 
 /////////////////////////////////////////////////////////////
 
-STATE HOOKKKKKK
+//STATE HOOKKKKKK
 
 function MyComponent(){
 
@@ -151,7 +149,7 @@ function MyComponent(){
 
 ///////////////////////////////////////////////////////////
 
-COUNTER PROGRAMMMMMMMMM
+// COUNTER PROGRAMMMMMMMMM
 
 import React, {useState} from "react"
 
@@ -181,7 +179,7 @@ function Counter (){
     )
 }
 
-MORE USE STATE -------------------------------------------
+// MORE USE STATE -------------------------------------------
 
 function MyComponent(){
 
@@ -214,8 +212,8 @@ function MyComponent(){
     )
 }
 
------------------------------------------------------
-UPDATER FUNCTIONS 
+// -----------------------------------------------------
+// UPDATER FUNCTIONS 
 
 function App() {
 
@@ -245,4 +243,71 @@ function decrease(){
     </>
   )
 
+}
+
+
+/////////////////////////////////////////////////////////////////////
+// SPREAD OP ... UPDATE FUNCTION 
+
+
+function Component(){
+
+    const [car, setCar] = useState({year: 2021, make:"BMW", model: "M240I"});
+
+    function handleMakeChange(event){
+        setCar(c => ({...c, make: event.target.value})) //Spread will keep everything else and update make
+    } // Al usar spread se usa ({...})
+
+    function handleModelChange(event){
+        setCar(c => ({...c, model: event.target.value}))
+    }
+
+    function handleYearChange(event){
+        setCar(c => ({...c, year: event.target.value}))
+    }
+
+    return(
+        <div>
+            <p>Your favorite car is : {car.year} {car.make} {car.model} </p>
+
+            <input type="number" onChange={handleYearChange} value={car.year} /> <br />
+            <input type="text" onChange={handleMakeChange} value={car.make} /> <br />
+            <input type="text" onChange={handleModelChange} value={car.model} /> <br />
+        </div>);
+}
+
+/////////////////////////////////////////////////////////////////
+// DELETE FROM ARRAY, UPDATE ARRAYS USING STATES 
+
+function Component(){
+    const[food, setFood] = useState(["Apple", "Banana"])
+
+    function handleAddFood(){
+        const newFood = document.getElementById("foodInput").value;
+        document.getElementById("foodInput").value = ""
+        setFood(f => [...f, newFood]) // Aca usamos spread, le traemos el most recent array
+        // y luego le agregamos la newFood
+    }
+
+    function removeFood(index){
+        setFood(food.filter((element, posicion) => posicion !== index))
+    } // filtra (quita) todo lo que sea diferente a el index(to be deleted)
+
+
+    // Cuando usamos un onClick o algo asi, podemos o pasar la referencia  la funcion (sin parentesis)
+    // Pero si la funcion necesita args, la pasamos como arrow function 
+    return(
+        <>
+        <div>
+            <h2>List of Food</h2>
+            <ul>
+                {food.map((food,index) => <li key={index} 
+                                        onClick={() => removeFood(index)}>   
+                                        {food}</li>)}
+            </ul>
+            <input type="text" name="" id="foodInput" placeholder="Enter food name" />
+            <button onClick={handleAddFood}>Add Food</button>
+        </div>
+        </>
+    )
 }
