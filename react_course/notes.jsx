@@ -571,3 +571,26 @@ function App() {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
+
+
+npm install tailwindcss @tailwindcss/vite
+
+
+En `vite.config.js`:
+
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+
+export default {
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+}
+```
+
+Y en `index.css` reemplaza todo con:
+```css
+@import "tailwindcss";
+
+////////////////////////////////////////////////////////////////////
