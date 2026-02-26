@@ -1,5 +1,4 @@
 import {useState } from 'react'
-import "tailwindcss";
 import './App.css'
 
 function App() {
@@ -48,12 +47,17 @@ function App() {
 
   return(
     <>
-      <h1 className='' >Weather App</h1>
-      <input value={city} onChange={handleCity} type="text" placeholder='Enter the name of the city to lookup' name="" id="" />
-      <button onClick={searchCity}>Search</button>
-      {weather && <p>La temperatura es : {weather.Temp}, feels like {weather.Feelslike}, the status is {weather.Status} and the DewPoint is {weather.DewPoint}</p>}
-      {error && <p>Error al buscar la ciudad, revisa la ciudad ingresada</p>}
-      {loading && <p>Cargando informacion....</p>}
+      <h1 className='text-3xl text-blue-800  text-center font-bold' >Weather App</h1>
+
+      <div className='flex flex-col text-center items-center gap-y-5'>
+        <input className='mt-4 w-2/6 rounded-2xl bg-gray-400 text-center font-medium'  value={city} onChange={handleCity} type="text" placeholder='Enter the name of the city to lookup' name="" id="" />
+        <button className='bg-gray-400 font-medium rounded-2xl p-1.5' onClick={searchCity}>Search</button>
+
+        {weather && <p>La temperatura es : {weather.Temp}, feels like {weather.Feelslike}, the status is {weather.Status} and the DewPoint is {weather.DewPoint}</p>}
+        {error && <p>Error al buscar la ciudad, revisa la ciudad ingresada</p>}
+        {loading && <p>Cargando informacion....</p>}
+      </div>
+      
     </>
   )
 }
