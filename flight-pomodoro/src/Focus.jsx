@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import LargeAirports from './data/LargeAirports.json'
 import { MapContainer, Marker, TileLayer, Tooltip, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -11,6 +11,30 @@ function Focus(){
     const [dataOrigin, setDataOrigin] = useState({})
     const [availableAirports, setAvailableAirports] = useState([])
     const [destination, setDestination] = useState()
+    const [isRunning, setIsRunning] = useState()
+    const [seconds, setSeconds] = useState(0)
+    const intervalIdRef = useRef(null) // SetInterval
+    const [progress, setProgress] = useState()
+
+    useEffect(()=> {
+        if(isRunning){
+            intervalIdRef.current = setInterval( ()=> {
+                setSeconds(prevSecs => prevSecs+1)
+            },1000);
+        }
+        return()=>{
+            clearInterval(intervalIdRef.current)
+        }
+    },[isRunning])
+
+
+    useEffect(()=>{
+        if(destination&&seconds>0){
+            const newProgress = (seconds/(destination.fligthTime*60))
+            setProgress(newProgress)
+        }
+    },[seconds])
+
 
 
     function handleCityInput(event){
@@ -21,11 +45,17 @@ function Focus(){
         const data = LargeAirports.find(a => a.municipality.toLowerCase() === city.toLowerCase()) // We find the airport by city name
         // We save the info about the origin airport 
         setDataOrigin(data)
+        // Lets add the fligth time from origin to each airport 
+        let listAirports = LargeAirports.map( airport => ({
+            ...airport, fligthTime : findFligthTime(data.latitude_deg, data.longitude_deg, airport.latitude_deg, airport.longitude_deg)
+        }))
+
         // We filter using comparing each airport lat and long to the origin, and return all airports in a range of 10+- minutes. We save the airports 
-        const listAirports = LargeAirports.filter(airport => {
-            let time = findFligthTime(data.latitude_deg, data.longitude_deg, airport.latitude_deg, airport.longitude_deg)
-            return time >= focusTime -10 && time <= focusTime+10
+        listAirports = listAirports.filter(airport => {
+            return airport.fligthTime >= focusTime -10 && airport.fligthTime <= focusTime+10
         })
+
+
         setAvailableAirports(listAirports)
         console.log(listAirports)
     }
@@ -61,8 +91,20 @@ function Focus(){
     }
 
 
+    // CREATE TIMER FOR FLIGTH PLAN 
 
+    function handleFlightPath(){
+        setIsRunning(true)
+        setProgress(seconds/destination.fligthTime)
+        console.log(progress)
 
+    }
+
+    function formatTime(){
+        const minutos = Math.floor(seconds/60)
+        const segundos = seconds%60
+        return(<p>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
+    }
 
 
     return(
@@ -70,13 +112,17 @@ function Focus(){
             <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name'/>
             <input value={focusTime} onChange={handleInputTime} type="text" placeholder='Focus time' />
             <br />
-            <button onClick={handleSearchAirport} >Submit</button>
+            {!destination && <button onClick={handleSearchAirport} >Search Destination</button>}
+            {destination && <button onClick={handleFlightPath}>Lets go</button>}
             <Map
                 dataOrigin = {dataOrigin}
                 availableAirports = {availableAirports}
                 destination = {destination}
                 setDestination = {setDestination}
+                progress = {progress}
             />
+            {isRunning && formatTime()}
+            
         </div>
     )
 

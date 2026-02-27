@@ -104,7 +104,3 @@ function Pomodoro(){
 
 export default Pomodoro
 
-
-// TODO : 
-// BASIC GUI
-// FOCUS FLIGTH 
