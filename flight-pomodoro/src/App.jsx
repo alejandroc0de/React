@@ -7,7 +7,7 @@ function App() {
 
   return(
     <div>
-      <nav>
+      <nav className='flex flex-row gap-2.5 text-2xl font-medium justify-center p-2 bg-gray-300'>
         <ul>Pomodoro</ul>
         <ul>Focus</ul>
       </nav>

@@ -37,7 +37,7 @@ function Pomodoro(){
     // Start is used for resume reset or start depending on the state, logic for that:
     function handleStart(){
         // I make sure time entered is correct 
-        if(timeLeft==="" || Number(timeLeft<=0)){
+        if(timeLeft==="" || Number(timeLeft)<=0){
             return
         }
         if(!isRunning && secondsLeft>0){
@@ -79,28 +79,23 @@ function Pomodoro(){
 
 
 
-
-
-
-
-
     return(
         <div className="flex flex-col items-center bg-blue-100">
             <div className=  {pomodoroStatus==="Focus"? "bg-blue-400": pomodoroStatus ==="Break"? "bg-yellow-300": "bg-blue-200 rounded-2xl"}> 
                 <h1 className="text-5xl text-center font-bold font-mono">Pomodoro</h1>
                 <div className="p-6 flex items-center justify-center ">
-                    <input className="w-1/2" onChange={handleTimeInput} value={timeLeft} placeholder="Enter your pomodoro time" type="number" name="" id="" />
+                    <input className="w-1/2" onChange={handleTimeInput} value={timeLeft} placeholder="Enter your time" type="number" name="" id="" />
                     <label htmlFor=""> Minutes</label> 
                 </div>
 
                 <br />
                 <div className="flex flex-col items-center justify-center gap-4 ">
-                    <button className="bg-amber-500 rounded-2xl p-2 hover:scale-110" onClick={handleOnFocusTime}>Focus Time</button>
-                    <button className="bg-amber-950 rounded-2xl p-2 hover:scale-110" onClick={handleOnBreakTime}>Break </button> 
-                    <button className="hover:scale-110" onClick={handleStart}>{isRunning ? "Pause": secondsLeft>0 ? "Resume": "Start"}</button>
-                    <button className="bg-red-300 hover:bg-red-500 hover:scale-110 transition-colors duration-150 rounded-2xl p-2" onClick={handleReset}>Reset</button>
+                    <button className="bg-green-300 rounded-2xl p-2 hover:scale-110" onClick={handleOnFocusTime}>Focus Time</button>
+                    <button className="bg-yellow-200 rounded-2xl p-2 hover:scale-110" onClick={handleOnBreakTime}>Break </button> 
+                    <button className="rounded-2xl p-2 bg-blue-300 hover:bg-green-300 hover:scale-110 transition-colors duration-150 " onClick={handleStart}>{isRunning ? "Pause": secondsLeft>0 ? "Resume": "Start"}</button>
+                    <button className="bg-blue-300 hover:bg-red-500 hover:scale-110 transition-colors duration-150 rounded-2xl p-2" onClick={handleReset}>Reset</button>
                 </div>
-                <div className="text-center text-9xl bg-green-500 mt-5 rounded-2xl" >{formatTime()}</div>
+                <div className="text-center text-9xl mt-5 rounded-2xl" >{formatTime()}</div>
             </div>
         </div>
     )
