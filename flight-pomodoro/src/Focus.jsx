@@ -2,6 +2,7 @@ import { useState } from 'react'
 import LargeAirports from './data/LargeAirports.json'
 import { MapContainer, Marker, TileLayer, Tooltip, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
+import Map from './Map.jsx'
 
 function Focus(){
 
@@ -59,11 +60,7 @@ function Focus(){
         return timeTaken
     }
 
-    function MapUpdater({center}){
-        const map = useMap()
-        map.setView(center,6)
-        return null
-    }
+
 
 
 
@@ -74,25 +71,12 @@ function Focus(){
             <input value={focusTime} onChange={handleInputTime} type="text" placeholder='Focus time' />
             <br />
             <button onClick={handleSearchAirport} >Submit</button>
-            <div>
-                <MapContainer center={[50.5,30.5]} zoom={13} style={{height:"800px"}}>
-                    <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-                    {dataOrigin.latitude_deg && <MapUpdater center={[dataOrigin.latitude_deg, dataOrigin.longitude_deg]} />}
-                    
-                    {dataOrigin.latitude_deg && 
-                        <Marker position={[dataOrigin.latitude_deg, dataOrigin.longitude_deg]}> 
-                            <Tooltip>{dataOrigin.municipality}</Tooltip>
-                        </Marker> 
-                    }
-
-
-                    {availableAirports && availableAirports.map((item,index) =>  item.latitude_deg && 
-                        <Marker eventHandlers={{click: () => setDestination(item)}} key={index} position={[item.latitude_deg, item.longitude_deg]}> 
-                            <Tooltip>{item.municipality}</Tooltip>
-                        </Marker> )
-                    }
-                </MapContainer>
-            </div>
+            <Map
+                dataOrigin = {dataOrigin}
+                availableAirports = {availableAirports}
+                destination = {destination}
+                setDestination = {setDestination}
+            />
         </div>
     )
 
