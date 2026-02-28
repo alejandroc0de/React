@@ -98,24 +98,27 @@ function Focus(){
     function formatTime(){
         const minutos = Math.floor(seconds/60)
         const segundos = seconds%60
-        return(<p>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
+        return(<p className='text-center p-3 text-4xl font-mono bg-blue-300'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
     }
 
 
     return(
-        <div>
-            <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name'/>
-            <input value={focusTime} onChange={handleInputTime} type="text" placeholder='Focus time' />
-            <br />
-            {!destination && <button onClick={handleSearchAirport} >Search Destination</button>}
-            {destination && <button onClick={handleFlightPath}>Lets go</button>}
+        <div className='h-screen overflow-hidden'>
+            <div className='flex flex-col items-center justify-between bg-gray-200'>
+                <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
+                <input value={focusTime} onChange={handleInputTime} type="text" placeholder='Focus time' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
+                {!destination && <button onClick={handleSearchAirport} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2' >Search Destination</button> }
+                {destination && <button onClick={handleFlightPath} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2'>Lets go</button>}
+            </div>
+
             <Map
                 dataOrigin = {dataOrigin}
                 availableAirports = {availableAirports}
                 destination = {destination}
                 setDestination = {setDestination}
                 progress = {progress}
-            /> {/* Props for the Map.jsx*/} 
+            /> {/* Props for the Map.jsx*/}                 
+
             {isRunning && formatTime()} {/* If its running lets format the time and show it*/}
         </div>
     )

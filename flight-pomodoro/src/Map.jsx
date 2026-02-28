@@ -24,7 +24,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
     return(
         <div>
             {/* I hardcoded the starting center to BOG, yk my city, and always use height. The layer can be changed with another link, i send dataOrigin to the out function so it can compare */}
-            <MapContainer center={[4.70159,-74.1469]} zoom={8} style={{height:"800px"}}>
+            <MapContainer center={[4.70159,-74.1469]} zoom={8} style={{height:"700px"}}>
                 <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                 {dataOrigin.latitude_deg && <MapUpdater dataOrigin={dataOrigin}/>}
         
