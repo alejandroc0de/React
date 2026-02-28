@@ -55,3 +55,19 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
     )
 }
 export default Map
+
+
+// TODO :
+// Auto cerrar el pop-up window una vez se elige destino
+// El time del pomodoro espera un int, si le mando str se buguea
+// Cambiar ortografia del flighttime 
+// Ciudad que no existe? rompe el render
+// Si se escoge destino? y luego busca otro destino?
+// Como cambiar destino?
+// What if the plane reaches dest? is it reseted to origin render?
+// Pause and reset for timmer, plane has to stop or reset 
+// Linea recta desde el origin al destino para que el avion la siga
+// Cambiar styling del pin por un avion real 
+// Quitar pin de los airports no elegidos 
+// Router para redireccion en la navbar entre los dos pomodoros 
+// Styling improvement 
