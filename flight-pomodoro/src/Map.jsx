@@ -42,6 +42,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
                     </Marker> 
                 }
         {/* I use a map to show all the airports on the array, and place a marker using LAT-LON, A pop-up includes useful info and the button to make this airport the destination */}
+        {/* I use the !destination to show all airports if there is no destination, this can be changed easily IMO */}
                 {availableAirports && !destination && availableAirports.map((item,index) =>  item.latitude_deg && 
                     <Marker key={index} position={[item.latitude_deg, item.longitude_deg]}> 
                         <Tooltip>{item.municipality}</Tooltip>
@@ -65,7 +66,7 @@ export default Map
 
 
 // TODO :
-// Auto cerrar el pop-up window una vez se elige destino
+// Auto cerrar el pop-up window una vez se elige destino // COMPLETED
 // El time del pomodoro espera un int, si le mando str se buguea
 // Cambiar ortografia del flighttime 
 // Ciudad que no existe? rompe el render

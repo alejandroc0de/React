@@ -6,7 +6,7 @@ import Map from './Map.jsx'
 function Focus(){
 
     const [city, setCity] = useState("")
-    const [focusTime, setFocusTime] = useState(0)
+    const [focusTime, setFocusTime] = useState("")
     const [dataOrigin, setDataOrigin] = useState({})
     const [availableAirports, setAvailableAirports] = useState([])
     const [destination, setDestination] = useState()
@@ -52,13 +52,13 @@ function Focus(){
 
         // We filter using comparing each airport lat and long to the origin, and return all airports in a range of 10+- minutes. We save the airports, easier to read having 2 dif methods
         listAirports = listAirports.filter(airport => {
-            return airport.fligthTime >= focusTime -10 && airport.fligthTime <= focusTime+10
+            return airport.fligthTime >= Number(focusTime) -10 && airport.fligthTime <= Number(focusTime)+10 // I only convert to Number until here, because of input reasons, 0 showing up making everything act weird
         })
         setAvailableAirports(listAirports)
     }
 
     function handleInputTime(event){
-        setFocusTime(Number(event.target.value))
+        setFocusTime(event.target.value)
     }
 
     // MATH FUNCTIONS TO FIND OUT TIMES 
@@ -106,7 +106,7 @@ function Focus(){
         <div className='h-screen overflow-hidden'>
             <div className='flex flex-col items-center justify-between bg-gray-200'>
                 <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
-                <input value={focusTime} onChange={handleInputTime} type="text" placeholder='Focus time' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
+                <input value={focusTime} onChange={handleInputTime} type="number" placeholder='Focus time' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
                 {!destination && <button onClick={handleSearchAirport} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2' >Search Destination</button> }
                 {destination && <button onClick={handleFlightPath} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2'>Lets go</button>}
             </div>
