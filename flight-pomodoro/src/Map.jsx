@@ -1,6 +1,6 @@
 import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 
 // I placed the map updater out of the function, cause it was being created every time map re-rendered, hence ignoring the condition and running the useEffect
@@ -21,6 +21,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
     const planeLat = destination ? dataOrigin.latitude_deg + (destination.latitude_deg - dataOrigin.latitude_deg) * progress : null
     const planeLon = destination ? dataOrigin.longitude_deg + (destination.longitude_deg - dataOrigin.longitude_deg) * progress : null
 
+
     return(
         <div>
             {/* I hardcoded the starting center to BOG, yk my city, and always use height. The layer can be changed with another link, i send dataOrigin to the out function so it can compare */}
@@ -34,8 +35,14 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
                         <Tooltip> HOME - {dataOrigin.municipality}, {dataOrigin.name}</Tooltip>
                     </Marker> 
                 }
+                {/* Here we show the destination pin only when destination was choosen and all other pins are deleted */}
+                {destination && destination.latitude_deg && 
+                    <Marker position={[destination.latitude_deg, destination.longitude_deg]}> 
+                        <Tooltip> DESTINATION - {destination.municipality}, {destination.name}</Tooltip>
+                    </Marker> 
+                }
         {/* I use a map to show all the airports on the array, and place a marker using LAT-LON, A pop-up includes useful info and the button to make this airport the destination */}
-                {availableAirports && availableAirports.map((item,index) =>  item.latitude_deg && 
+                {availableAirports && !destination && availableAirports.map((item,index) =>  item.latitude_deg && 
                     <Marker key={index} position={[item.latitude_deg, item.longitude_deg]}> 
                         <Tooltip>{item.municipality}</Tooltip>
                         <Popup>
@@ -43,7 +50,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
                             <p>Airport City: {item.municipality}</p>
                             <p>Airport Code: {item.iata_code}</p>
                             <p>{item.fligthTime} min to Destination</p>
-                            <button onClick={() => setDestination(item)} className='' >I want this destination</button>
+                            <button onClick={() => {setDestination(item)}} className='' >I want this destination</button>
                         </Popup>
                     </Marker> )
                 }
