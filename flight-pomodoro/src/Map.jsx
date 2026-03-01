@@ -50,7 +50,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
                             <p>Airport name: {item.name}</p>
                             <p>Airport City: {item.municipality}</p>
                             <p>Airport Code: {item.iata_code}</p>
-                            <p>{item.fligthTime} min to Destination</p>
+                            <p>{item.flightTime} min to Destination</p>
                             <button onClick={() => {setDestination(item)}} className='' >I want this destination</button>
                         </Popup>
                     </Marker> )
@@ -67,8 +67,11 @@ export default Map
 
 // TODO :
 // Auto cerrar el pop-up window una vez se elige destino // COMPLETED
-// El time del pomodoro espera un int, si le mando str se buguea
-// Cambiar ortografia del flighttime 
+// El time del pomodoro espera un int, si le mando str se buguea // HALF COMPLETED, ACEPTING STRINGS 
+// Cambiar ortografia del flighttime  // COMPLETED
+
+
+
 // Ciudad que no existe? rompe el render
 // Si se escoge destino? y luego busca otro destino?
 // Como cambiar destino?
