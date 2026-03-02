@@ -3,6 +3,26 @@ import 'leaflet/dist/leaflet.css'
 import { useEffect, useRef, useState } from 'react'
 
 
+    // Settings for icons, i had to add them for render issues in netlify, the second import is for IOS icons 
+    import L from 'leaflet'
+    import markerIcon from 'leaflet/dist/images/marker-icon.png'
+    import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
+    delete L.Icon.Default.prototype._getIconUrl
+    L.Icon.Default.mergeOptions({
+        iconUrl: markerIcon,
+        shadowUrl: markerShadow,
+    })
+    import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
+    L.Icon.Default.mergeOptions({
+        iconUrl: markerIcon,
+        iconRetinaUrl: markerIcon2x,
+        shadowUrl: markerShadow,
+    })
+
+
+
+
 // I placed the map updater out of the function, cause it was being created every time map re-rendered, hence ignoring the condition and running the useEffect
 // We only reset the window when the origin is changed
 function MapUpdater({dataOrigin}){
