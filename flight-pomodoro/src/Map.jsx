@@ -75,9 +75,9 @@ export default Map
 // Pause and reset for timmer, plane has to stop or reset COMPLETED
 // Quitar pin de los airports no elegidos COMPLETED 
 // Router para redireccion en la navbar entre los dos pomodoros COMPLETED
+// Add plane sound for background COMPLETED 
 
 
-// Add plane sound for background
 // Como cambiar destino?
 // Linea recta desde el origin al destino para que el avion la siga
 // Cambiar styling del pin por un avion real 
