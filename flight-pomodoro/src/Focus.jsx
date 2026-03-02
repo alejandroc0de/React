@@ -43,6 +43,10 @@ function Focus(){
 
     function handleSearchAirport(){
         const data = LargeAirports.find(a => a.municipality.toLowerCase() === city.toLowerCase()) // We find the airport by city name
+        if(data == undefined){
+            console.log("City not found")
+            return
+        }
         // I save the info about the origin airport 
         setDataOrigin(data)
         // Lets add the flight time from origin to each airport 
@@ -94,12 +98,32 @@ function Focus(){
         setIsRunning(true) // This is used by the interval 
         setProgress(seconds/destination.flightTime)
     }
-
     function formatTime(){
         const minutos = Math.floor(seconds/60)
         const segundos = seconds%60
         return(<p className='text-center p-3 text-4xl font-mono bg-blue-300'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
     }
+
+
+    // CONTROLS FOR THE TIMMER 
+    function handlePause(){
+        if(isRunning && seconds>0){
+            setIsRunning(false)
+        }
+        if(!isRunning && seconds>0){
+            setIsRunning(true)
+        }
+    }
+
+    function handleReset(){
+        setIsRunning(false)
+        setSeconds(0)
+        setCity("")
+        setDestination()
+        setFocusTime("")
+        setAvailableAirports([])
+    }
+
 
 
     return(
@@ -119,7 +143,11 @@ function Focus(){
                 progress = {progress}
             /> {/* Props for the Map.jsx*/}                 
 
-            {isRunning && formatTime()} {/* If its running lets format the time and show it*/}
+            {formatTime()} {/* If its running lets format the time and show it*/}
+            <div id='Controls for the timmer'>
+                <button onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
+                <button onClick={handleReset}>Reset</button>
+            </div>
         </div>
     )
 }

@@ -69,13 +69,14 @@ export default Map
 // Auto cerrar el pop-up window una vez se elige destino // COMPLETED
 // El time del pomodoro espera un int, si le mando str se buguea // HALF COMPLETED, ACEPTING STRINGS 
 // Cambiar ortografia del flighttime  // COMPLETED
+// Ciudad que no existe? rompe el render COMPLETED 
+// Si se escoge destino? y luego busca otro destino? COMPLETEDD
 
 
-
-// Ciudad que no existe? rompe el render
-// Si se escoge destino? y luego busca otro destino?
-// Como cambiar destino?
 // What if the plane reaches dest? is it reseted to origin render?
+
+// Como cambiar destino?
+
 // Pause and reset for timmer, plane has to stop or reset 
 // Linea recta desde el origin al destino para que el avion la siga
 // Cambiar styling del pin por un avion real 
