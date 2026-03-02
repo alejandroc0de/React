@@ -70,10 +70,9 @@ export default Map
 // El time del pomodoro espera un int, si le mando str se buguea // HALF COMPLETED, ACEPTING STRINGS 
 // Cambiar ortografia del flighttime  // COMPLETED
 // Ciudad que no existe? rompe el render COMPLETED 
-// Si se escoge destino? y luego busca otro destino? COMPLETEDD
+// Si se escoge destino? y luego busca otro destino? COMPLETEDD 
+// What if the plane reaches dest? is it reseted to origin render? // COMPLETED 
 
-
-// What if the plane reaches dest? is it reseted to origin render?
 
 // Como cambiar destino?
 
@@ -83,3 +82,4 @@ export default Map
 // Quitar pin de los airports no elegidos 
 // Router para redireccion en la navbar entre los dos pomodoros 
 // Styling improvement 
+// Add cx help messages like incorrect city or you made it 

@@ -33,6 +33,14 @@ function Focus(){
             const newProgress = (seconds/(destination.flightTime*60)) // flighttime is in seconds so we have to pass it to minutes for the calc 
             setProgress(newProgress)
         }
+        if(destination && seconds>=(destination.flightTime*60) ){
+            setIsRunning(false)
+            setSeconds(0)
+            setCity("")
+            setDestination()
+            setFocusTime("")
+            setAvailableAirports([])            
+        }
     },[seconds]) // I only updated progress after seconds is changed
 
 
