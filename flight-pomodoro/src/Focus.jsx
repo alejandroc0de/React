@@ -14,7 +14,17 @@ function Focus(){
     const [seconds, setSeconds] = useState(0)
     const intervalIdRef = useRef(null) // SetInterval
     const [progress, setProgress] = useState()
+    const audioRef = useRef()
 
+
+    // This useffect listen to isRunning and while running plays the inflight sounds!
+    useEffect(()=> {
+        if(isRunning){
+            audioRef.current.play()
+        }else{
+            audioRef.current.pause()
+        }
+    },[isRunning])
 
     useEffect(()=> {
         if(isRunning){
@@ -103,7 +113,7 @@ function Focus(){
     // CREATE TIMER FOR FLIGTH PLAN 
 
     function handleFlightPath(){
-        setIsRunning(true) // This is used by the interval 
+        setIsRunning(true) // This is used by the interval
         setProgress(seconds/destination.flightTime)
     }
     function formatTime(){
@@ -155,6 +165,7 @@ function Focus(){
             <div id='Controls for the timmer'>
                 <button onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
                 <button onClick={handleReset}>Reset</button>
+                <audio ref={audioRef} src='/sounds/50min-2.mp3' />
             </div>
         </div>
     )

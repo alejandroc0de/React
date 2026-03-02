@@ -72,14 +72,14 @@ export default Map
 // Ciudad que no existe? rompe el render COMPLETED 
 // Si se escoge destino? y luego busca otro destino? COMPLETEDD 
 // What if the plane reaches dest? is it reseted to origin render? // COMPLETED 
+// Pause and reset for timmer, plane has to stop or reset COMPLETED
+// Quitar pin de los airports no elegidos COMPLETED 
+// Router para redireccion en la navbar entre los dos pomodoros COMPLETED
 
 
+// Add plane sound for background
 // Como cambiar destino?
-
-// Pause and reset for timmer, plane has to stop or reset 
 // Linea recta desde el origin al destino para que el avion la siga
 // Cambiar styling del pin por un avion real 
-// Quitar pin de los airports no elegidos 
-// Router para redireccion en la navbar entre los dos pomodoros 
 // Styling improvement 
 // Add cx help messages like incorrect city or you made it 
