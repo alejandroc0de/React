@@ -113,13 +113,16 @@ function Focus(){
     // CREATE TIMER FOR FLIGTH PLAN 
 
     function handleFlightPath(){
+        if(isRunning){
+            return
+        }
         setIsRunning(true) // This is used by the interval
         setProgress(seconds/destination.flightTime)
     }
     function formatTime(){
         const minutos = Math.floor(seconds/60)
         const segundos = seconds%60
-        return(<p className='text-center p-3 text-4xl font-mono bg-blue-300'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
+        return(<p className=' flex flex-row items-center rounded-2xl text-center p-4 text-5xl font-mono bg-blue-300'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
     }
 
 
@@ -145,12 +148,12 @@ function Focus(){
 
 
     return(
-        <div className='h-screen overflow-hidden'>
-            <div className='flex flex-col items-center justify-between bg-gray-200'>
+        <div className='h-full flex flex-col'>
+            <div className='flex flex-row items-center justify-center p-3 gap-5 bg-gray-200'>
                 <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
                 <input value={focusTime} onChange={handleInputTime} type="number" placeholder='Focus time' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
                 {!destination && <button onClick={handleSearchAirport} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2' >Search Destination</button> }
-                {destination && <button onClick={handleFlightPath} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2'>Lets go</button>}
+                {destination && <button onClick={handleFlightPath} className='bg-blue-300 p-3 font-medium text-2x2 rounded-2xl m-2'>Let's Fly</button>}
             </div>
 
             <Map
@@ -161,8 +164,9 @@ function Focus(){
                 progress = {progress}
             /> {/* Props for the Map.jsx*/}                 
 
-            {formatTime()} {/* If its running lets format the time and show it*/}
-            <div id='Controls for the timmer'>
+            
+            <div className='flex flex-row justify-center gap-5 text-4xl bg-blue-200 p-3'>
+                {formatTime()} {/* If its running lets format the time and show it*/}
                 <button onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
                 <button onClick={handleReset}>Reset</button>
                 <audio ref={audioRef} src='/sounds/50min-2.mp3' />
