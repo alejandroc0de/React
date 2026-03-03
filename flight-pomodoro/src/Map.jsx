@@ -1,6 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
+import 'leaflet.geodesic'
 
 
     // Settings for icons, i had to add them for render issues in netlify, the second import is for IOS icons 
@@ -23,6 +24,7 @@ import { useEffect, useRef, useState } from 'react'
 
 
 
+
 // I placed the map updater out of the function, cause it was being created every time map re-rendered, hence ignoring the condition and running the useEffect
 // We only reset the window when the origin is changed
 function MapUpdater({dataOrigin}){
@@ -32,6 +34,21 @@ const map = useMap()
             map.setView([dataOrigin.latitude_deg, dataOrigin.longitude_deg],6)
         }
     },[dataOrigin.latitude_deg])// If we use the whole object react thinks it has changed, so best to use a dependency 
+    return null
+}
+
+
+// Function for map line 
+function MapLine({dataOrigin,destination}){
+    const map = useMap()
+    useEffect(() => {
+        if(destination.latitude_deg){
+        const geodesicLine = new L.Geodesic([
+            [dataOrigin.latitude_deg, dataOrigin.longitude_deg],
+            [destination.latitude_deg, destination.longitude_deg]
+        ]).addTo(map);
+    }
+    }, [destination.latitude_deg])
     return null
 }
 
@@ -48,6 +65,8 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
             <MapContainer className='w-full h-full' center={[4.70159,-74.1469]} zoom={8} style={{}}>
                 <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                 {dataOrigin.latitude_deg && <MapUpdater dataOrigin={dataOrigin}/>}
+            {/* Here we add a line for the plane to follow TRYING  */}
+                {destination && <MapLine dataOrigin={dataOrigin} destination={destination} />}
         
         {/* Here i add the pin to the origin airport and display name and city based */}
                 {dataOrigin.latitude_deg && 
@@ -97,9 +116,9 @@ export default Map
 // Router para redireccion en la navbar entre los dos pomodoros COMPLETED
 // Add plane sound for background COMPLETED 
 
+// Linea recta desde el origin al destino para que el avion la siga -- DOESNT DELETE AT THE MOMENT
 
 // Como cambiar destino?
-// Linea recta desde el origin al destino para que el avion la siga
 // Cambiar styling del pin por un avion real 
 // Styling improvement 
 // Add cx help messages like incorrect city or you made it 
