@@ -22,9 +22,6 @@ import 'leaflet.geodesic'
     })
 
 
-
-
-
 // I placed the map updater out of the function, cause it was being created every time map re-rendered, hence ignoring the condition and running the useEffect
 // We only reset the window when the origin is changed
 function MapUpdater({dataOrigin}){
@@ -38,18 +35,26 @@ const map = useMap()
 }
 
 
-// Function for map line 
+// Function for map line
+
+
 function MapLine({dataOrigin,destination}){
+    const lineRef = useRef(null) 
     const map = useMap()
     useEffect(() => {
         if(destination.latitude_deg){
-        const geodesicLine = new L.Geodesic([
+            if(lineRef.current){lineRef.current.remove()} // If there is a lineRef already we remove it 
+        lineRef.current = new L.Geodesic([ // Make sure it is imported 
             [dataOrigin.latitude_deg, dataOrigin.longitude_deg],
             [destination.latitude_deg, destination.longitude_deg]
         ]).addTo(map);
-    }
+        }
     }, [destination.latitude_deg])
-    return null
+    return () => {
+        if(lineRef.current){
+            lineRef.current.remove()
+        }
+    }
 }
 
 function Map({dataOrigin,availableAirports,destination,setDestination,progress}){
