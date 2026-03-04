@@ -49,12 +49,13 @@ function MapLine({dataOrigin,destination}){
             [destination.latitude_deg, destination.longitude_deg]
         ]).addTo(map);
         }
-    }, [destination.latitude_deg])
-    return () => {
-        if(lineRef.current){
-            lineRef.current.remove()
+        return()=>{ // CleanUp return, this runs everytime it is desmount it once no destination 
+            if(lineRef.current){
+                lineRef.current.remove()
+            }
         }
-    }
+    }, [destination.latitude_deg])
+    return null // Doesnt render any of JSX so return is null
 }
 
 function Map({dataOrigin,availableAirports,destination,setDestination,progress}){
@@ -70,8 +71,8 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
             <MapContainer className='w-full h-full' center={[4.70159,-74.1469]} zoom={8} style={{}}>
                 <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                 {dataOrigin.latitude_deg && <MapUpdater dataOrigin={dataOrigin}/>}
-            {/* Here we add a line for the plane to follow TRYING  */}
-                {destination && <MapLine dataOrigin={dataOrigin} destination={destination} />}
+            {/* Here we add a line for the plane to follow TRYING When no destination the mapline is desmount it   */}
+                {destination && <MapLine dataOrigin={dataOrigin} destination={destination} />} 
         
         {/* Here i add the pin to the origin airport and display name and city based */}
                 {dataOrigin.latitude_deg && 
