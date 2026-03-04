@@ -1,25 +1,22 @@
 import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { use, useEffect, useRef, useState } from 'react'
-import 'leaflet.geodesic'
+import { useEffect,} from 'react'
 import "leaflet"
 import "leaflet-rotatedmarker"
 import L from 'leaflet'
-
-
-// Settings for icons, i had to add them for render issues in netlify, the second import is for IOS icons 
+import 'leaflet/dist/leaflet.css'
 import markerIcon from 'leaflet/dist/images/marker-icon.png'
-delete L.Icon.Default.prototype._getIconUrl
-L.Icon.Default.mergeOptions({
-    iconUrl: markerIcon,
-    shadowUrl: markerShadow,
-})
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
+import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+
+delete L.Icon.Default.prototype._getIconUrl
+
 L.Icon.Default.mergeOptions({
-    iconUrl: markerIcon,
-    iconRetinaUrl: markerIcon2x,
-    shadowUrl: markerShadow,
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
 })
+
 
 // Functions for convertion 
 function toDegrees(radians) {
@@ -60,29 +57,6 @@ const map = useMap()
 }
 
 
-// Function for map line
-
-
-function MapLine({dataOrigin,destination}){
-    const lineRef = useRef(null) 
-    const map = useMap()
-    useEffect(() => {
-        if(destination.latitude_deg){
-            if(lineRef.current){lineRef.current.remove()} // If there is a lineRef already we remove it 
-        lineRef.current = new L.Geodesic([ // Make sure it is imported 
-            [dataOrigin.latitude_deg, dataOrigin.longitude_deg],
-            [destination.latitude_deg, destination.longitude_deg]
-        ]).addTo(map);
-        }
-        return()=>{ // CleanUp return, this runs everytime it is desmount it once no destination 
-            if(lineRef.current){
-                lineRef.current.remove()
-            }
-        }
-    }, [destination.latitude_deg])
-    return null // Doesnt render any of JSX so return is null
-}
-
 function Map({dataOrigin,availableAirports,destination,setDestination,progress}){
 
     // We can calculate the plane position based on this formula, progress is a % returned from the Focus.jsx
@@ -104,8 +78,6 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
             <MapContainer className='w-full h-full' center={[4.70159,-74.1469]} zoom={8} style={{}}>
                 <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                 {dataOrigin.latitude_deg && <MapUpdater dataOrigin={dataOrigin}/>}
-            {/* Here we add a line for the plane to follow TRYING When no destination the mapline is desmount it   */}
-                {destination && <MapLine dataOrigin={dataOrigin} destination={destination} />} 
         
         {/* Here i add the pin to the origin airport and display name and city based */}
                 {dataOrigin.latitude_deg && 
