@@ -2,24 +2,49 @@ import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMap} from 'react-le
 import 'leaflet/dist/leaflet.css'
 import { use, useEffect, useRef, useState } from 'react'
 import 'leaflet.geodesic'
+import "leaflet"
+import "leaflet-rotatedmarker"
+import L from 'leaflet'
 
 
-    // Settings for icons, i had to add them for render issues in netlify, the second import is for IOS icons 
-    import L from 'leaflet'
-    import markerIcon from 'leaflet/dist/images/marker-icon.png'
-    import markerShadow from 'leaflet/dist/images/marker-shadow.png'
+// Settings for icons, i had to add them for render issues in netlify, the second import is for IOS icons 
+import markerIcon from 'leaflet/dist/images/marker-icon.png'
+delete L.Icon.Default.prototype._getIconUrl
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
+})
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+})
 
-    delete L.Icon.Default.prototype._getIconUrl
-    L.Icon.Default.mergeOptions({
-        iconUrl: markerIcon,
-        shadowUrl: markerShadow,
-    })
-    import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
-    L.Icon.Default.mergeOptions({
-        iconUrl: markerIcon,
-        iconRetinaUrl: markerIcon2x,
-        shadowUrl: markerShadow,
-    })
+// Functions for convertion 
+function toDegrees(radians) {
+  return radians * 180 / Math.PI;
+}
+const degToRad = (deg) => {
+    return (deg*Math.PI) / 180
+}
+
+// This function calculates bearing, -45 since the png used is rotated 45% fml 
+function calculateBearing(startLat, startLng, destLat, destLng){
+    startLat = degToRad(startLat);
+    startLng = degToRad(startLng);
+    destLat = degToRad(destLat);
+    destLng = degToRad(destLng);
+
+    const y = Math.sin(destLng - startLng) * Math.cos(destLat);
+    const x = Math.cos(startLat) * Math.sin(destLat) -
+        Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+    let brng = Math.atan2(y, x);
+    brng = toDegrees(brng);
+    brng = (brng + 360) % 360;
+    return brng - 45
+}
+
 
 
 // I placed the map updater out of the function, cause it was being created every time map re-rendered, hence ignoring the condition and running the useEffect
@@ -63,8 +88,16 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
     // We can calculate the plane position based on this formula, progress is a % returned from the Focus.jsx
     const planeLat = destination ? dataOrigin.latitude_deg + (destination.latitude_deg - dataOrigin.latitude_deg) * progress : null
     const planeLon = destination ? dataOrigin.longitude_deg + (destination.longitude_deg - dataOrigin.longitude_deg) * progress : null
-
-
+    const bearing = destination ? calculateBearing(dataOrigin.latitude_deg, dataOrigin.longitude_deg, destination.latitude_deg, destination.longitude_deg):0
+    // I calculate bearing once there is a destination
+    const planeIcon = L.icon({
+        iconUrl: '/icons/plane.png',
+        iconSize: [32,32],
+        iconAnchor : [16,16],
+        className:'plane-icon'
+    })
+    
+    
     return(
         <div className='h-full'>
             {/* I hardcoded the starting center to BOG, yk my city, and always use height. The layer can be changed with another link, i send dataOrigin to the out function so it can compare */}
@@ -101,7 +134,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
                     </Marker> )
                 }
         {/* If progress has started we show a marker (soon icon) with the plane location  */}
-                {destination && progress>0 && <Marker position={[planeLat,planeLon]}>
+                {destination && progress>0 && <Marker  position={[planeLat,planeLon]} icon={planeIcon} rotationAngle={bearing} rotationOrigin='center' >
                     </Marker>}
             </MapContainer>
         </div>
@@ -121,10 +154,9 @@ export default Map
 // Quitar pin de los airports no elegidos COMPLETED 
 // Router para redireccion en la navbar entre los dos pomodoros COMPLETED
 // Add plane sound for background COMPLETED 
-
-// Linea recta desde el origin al destino para que el avion la siga -- DOESNT DELETE AT THE MOMENT
+// Linea recta desde el origin al destino para que el avion la siga COMPLETED
+// Cambiar styling del pin por un avion real  Completed
 
 // Como cambiar destino?
-// Cambiar styling del pin por un avion real 
 // Styling improvement 
 // Add cx help messages like incorrect city or you made it 

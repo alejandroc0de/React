@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+
+.plane-icon{
+    background: none !important;
+    border: none !important;
+    transform: rotate();
+}
