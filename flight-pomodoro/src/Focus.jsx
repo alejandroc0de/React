@@ -15,6 +15,7 @@ function Focus(){
     const intervalIdRef = useRef(null) // SetInterval
     const [progress, setProgress] = useState()
     const audioRef = useRef()
+    const [landed, setLanded] = useState(false)
 
 
     // This useffect listen to isRunning and while running plays the inflight sounds!
@@ -47,7 +48,7 @@ function Focus(){
             setIsRunning(false)
             setSeconds(0)
             setCity("")
-            setDestination()
+            setLanded(true)
             setFocusTime("")
             setAvailableAirports([])            
         }
@@ -60,9 +61,9 @@ function Focus(){
     }
 
     function handleSearchAirport(){
-        const data = LargeAirports.find(a => a.municipality.toLowerCase() === city.toLowerCase()) // We find the airport by city name
+        const data = LargeAirports.find(a => a.municipality.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"") === city.toLowerCase()) // We find the airport by city name
         if(data == undefined){
-            console.log("City not found")
+            window.alert("City not found")
             return
         }
         // I save the info about the origin airport 
@@ -137,6 +138,7 @@ function Focus(){
     }
 
     function handleReset(){
+        setLanded(false)
         setIsRunning(false)
         setSeconds(0)
         setCity("")
@@ -156,6 +158,17 @@ function Focus(){
                 {destination && !isRunning && <button onClick={handleFlightPath} className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150'>Let's Fly</button>}
                 {destination && isRunning && <button className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2' >Flight time : {destination.flightTime} mins</button>}
             </div>
+            <div id='conditionalMessage'>
+                {landed && <div className='flex absolute border-2 inset-0 z-50 items-center justify-center backdrop-blur-md'>
+                    <div className='text-center'>
+                                    <h2 className='text-2xl'>You have arrived!</h2>
+                                    <p>Welcome to {destination.municipality} </p> 
+                                </div>
+                    </div> 
+                }
+
+            </div>
+
             <Map
                 dataOrigin = {dataOrigin}
                 availableAirports = {availableAirports}
