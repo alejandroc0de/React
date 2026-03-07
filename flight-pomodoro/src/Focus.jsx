@@ -15,6 +15,7 @@ function Focus(){
     const intervalIdRef = useRef(null) // SetInterval
     const [progress, setProgress] = useState()
     const audioRef = useRef()
+    const successAudio = useRef()
     const [landed, setLanded] = useState(false)
 
 
@@ -45,6 +46,7 @@ function Focus(){
             setProgress(newProgress)
         }
         if(destination && seconds>=(destination.flightTime*60) ){
+            successAudio.current.play()
             setIsRunning(false)
             setSeconds(0)
             setCity("")
@@ -183,7 +185,8 @@ function Focus(){
                 {formatTime()} {/* If its running lets format the time and show it*/}
                 <button className='hover:scale-115 transition-all duration-150' onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
                 <button className='hover:scale-115 transition-all duration-150' onClick={handleReset}>Reset</button>
-                <audio ref={audioRef} src='/sounds/50min-2.mp3' />
+                <audio ref={audioRef} src='/sounds/50min-2.mp3'/>
+                <audio ref={successAudio} src="/sounds/success.mp3"></audio>
             </div>
         </div>
     )

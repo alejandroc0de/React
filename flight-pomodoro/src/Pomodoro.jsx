@@ -86,16 +86,16 @@ function Pomodoro(){
                     <h1 className="font-Bungee One text-3xl text-center font-medium text-gray-500 hover:scale-125 transition-all duration-150">Pomodoro</h1>
                 </div>   
                     
-                <div id="timmerDiv" className="flex flex-1 items-center text-9xl text-center font-bold" style={{fontSize:'20vw'}} >
+                <div id="timmerDiv" className=" font-mono tabular-nums flex flex-1 items-center text-center font-extrabold" style={{fontSize:'20vw'}} >
                     {formatTime()}
                 </div>
 
-                <div id="inputDiv" className="flex flex-row w-full justify-evenly items-center" style={{marginBottom:'5vw'}}>
+                <div id="inputDiv" className=" flex flex-row w-full justify-evenly items-center" style={{marginBottom:'5vw'}}>
                     <input className="w-5/9 p-2 font-black text-3xl text-center" onChange={handleTimeInput} value={timeLeft} placeholder="Enter your time" type="number" name="" id="" />
                     <label className="text-3x1 font-black " htmlFor=""> Minutes</label> 
                 </div>
 
-                <div id="buttonDiv" className=" flex flex-row w-full justify-evenly mt-auto ">
+                <div id="buttonDiv" className=" flex flex-row w-full justify-around mt-auto ">
                     <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleOnFocusTime}>Focus</button>
                     <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleOnBreakTime}>Break </button> 
                     <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleStart}>{isRunning ? "Pause": secondsLeft>0 ? "Resume": "Start"}</button>
