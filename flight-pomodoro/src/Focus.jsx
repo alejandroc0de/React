@@ -153,7 +153,8 @@ function Focus(){
                 <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className=' border-b outline-none backdrop-blur-xs p-2 text-2x2 rounded-2xl m-2'/>
                 <input value={focusTime} onChange={handleInputTime} type="number" placeholder='Focus time' className='border-b outline-none backdrop-blur-xs p-2 text-2x2 rounded-2xl m-2'/>
                 {!destination && <button onClick={handleSearchAirport} className='backdrop-blur-xs border-b p-3 text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150' >Search Destination</button> }
-                {destination && <button onClick={handleFlightPath} className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150'>Let's Fly</button>}
+                {destination && !isRunning && <button onClick={handleFlightPath} className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150'>Let's Fly</button>}
+                {destination && isRunning && <button className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2' >Flight time : {destination.flightTime} mins</button>}
             </div>
             <Map
                 dataOrigin = {dataOrigin}
