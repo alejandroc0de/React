@@ -71,7 +71,6 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
         className:'plane-icon'
     })
     
-    
     return(
         <div className='h-full'>
             {/* I hardcoded the starting center to BOG, yk my city, and always use height. The layer can be changed with another link, i send dataOrigin to the out function so it can compare */}
@@ -129,6 +128,9 @@ export default Map
 // Linea recta desde el origin al destino para que el avion la siga COMPLETED
 // Cambiar styling del pin por un avion real  Completed
 
-// Como cambiar destino?
 // Styling improvement 
+
+
+
+
 // Add cx help messages like incorrect city or you made it 

@@ -80,25 +80,26 @@ function Pomodoro(){
 
 
     return(
-        <div className="h-full flex flex-col  items-center bg-blue-100">
-            <div className="flex-1 flex items-center justify-center">     
-                <div className=  {pomodoroStatus==="Focus"? "bg-blue-400": pomodoroStatus ==="Break"? "bg-yellow-300": "bg-blue-200 rounded-2xl p-10"}> 
-                    <h1 className="text-7xl p-5 text-center font-bold font-mono">Pomodoro</h1>
+        <div className="h-full flex flex-col  items-center bg-beige-pomodoro">
+            <div className="flex-1 flex flex-col items-center justify-center py-20">  
+                <div id="Div for top items">
+                    <h1 className="font-Bungee One text-3xl text-center font-medium text-gray-500 hover:scale-125 transition-all duration-150">Pomodoro</h1>
+                </div>   
+                    
+                <div id="timmerDiv" className="flex flex-1 items-center text-9xl text-center font-bold" style={{fontSize:'20vw'}} >
+                    {formatTime()}
+                </div>
 
+                <div id="inputDiv" className="flex flex-row w-full justify-evenly items-center" style={{marginBottom:'5vw'}}>
+                    <input className="w-5/9 p-2 font-black text-3xl text-center" onChange={handleTimeInput} value={timeLeft} placeholder="Enter your time" type="number" name="" id="" />
+                    <label className="text-3x1 font-black " htmlFor=""> Minutes</label> 
+                </div>
 
-                    <div className="p-6 flex items-center justify-center ">
-                        <input className="w-2/3 p-2 font-black text-3xl text-center" onChange={handleTimeInput} value={timeLeft} placeholder="Enter your time" type="number" name="" id="" />
-                        <label className="text-3x1 font-black " htmlFor=""> Minutes</label> 
-                    </div>
-
-
-                    <div className="flex flex-col  items-center justify-center gap-4 ">
-                        <button className="bg-green-300 rounded-2xl p-2 hover:scale-110 text-4xl font-medium" onClick={handleOnFocusTime}>Focus Time</button>
-                        <button className="bg-yellow-200 rounded-2xl p-2 hover:scale-110 text-4xl font-medium" onClick={handleOnBreakTime}>Break </button> 
-                        <button className="rounded-2xl p-2 bg-blue-300 hover:bg-green-300 hover:scale-110 transition-colors duration-150 text-4xl font-medium " onClick={handleStart}>{isRunning ? "Pause": secondsLeft>0 ? "Resume": "Start"}</button>
-                        <button className="bg-blue-300 hover:bg-red-500 hover:scale-110 transition-colors duration-150 rounded-2xl p-2 text-4xl font-medium" onClick={handleReset}>Reset</button>
-                    </div>
-                    <div className=" mt-10 text-center text-9xl font-bold rounded-2xl bg-blue-300 p-4" >{formatTime()}</div>
+                <div id="buttonDiv" className=" flex flex-row w-full justify-evenly mt-auto ">
+                    <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleOnFocusTime}>Focus</button>
+                    <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleOnBreakTime}>Break </button> 
+                    <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleStart}>{isRunning ? "Pause": secondsLeft>0 ? "Resume": "Start"}</button>
+                    <button className=" text-2xl font-medium hover:scale-125 transition-all duration-150" onClick={handleReset}>Reset</button>
                 </div>
             </div>
         </div>

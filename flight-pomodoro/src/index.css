@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 
+@theme {
+    --color-beige-pomodoro : #F0E4DF;
+}
+
+
+body {
+  font-family: 'Bungee', sans-serif;
+}
+
 .plane-icon{
     background: none !important;
     border: none !important;
     transform: rotate();
 }
+
