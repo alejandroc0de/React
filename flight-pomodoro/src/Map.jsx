@@ -72,7 +72,7 @@ function Map({dataOrigin,availableAirports,destination,setDestination,progress})
     })
     
     return(
-        <div className='h-full'>
+        <div className='h-full inset-0 absolute z-0'>
             {/* I hardcoded the starting center to BOG, yk my city, and always use height. The layer can be changed with another link, i send dataOrigin to the out function so it can compare */}
             <MapContainer className='w-full h-full' center={[4.70159,-74.1469]} zoom={8} style={{}}>
                 <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />

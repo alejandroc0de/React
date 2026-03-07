@@ -122,7 +122,7 @@ function Focus(){
     function formatTime(){
         const minutos = Math.floor(seconds/60)
         const segundos = seconds%60
-        return(<p className=' flex flex-row items-center rounded-2xl text-center p-4 text-5xl font-mono bg-blue-300'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
+        return(<p className=' flex flex-row items-center rounded-2xl text-center p-4 text-5xl backdrop-blur-xs'>{String(minutos).padStart(2,'0')}:{String(segundos).padStart(2,'0')}</p>)
     }
 
 
@@ -148,27 +148,27 @@ function Focus(){
 
 
     return(
-        <div className='h-full flex flex-col'>
-            <div className='flex flex-row items-center justify-center p-3 gap-5 bg-gray-200'>
-                <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
-                <input value={focusTime} onChange={handleInputTime} type="number" placeholder='Focus time' className='bg-gray-300 p-2 text-2x2 rounded-2xl m-2'/>
-                {!destination && <button onClick={handleSearchAirport} className='bg-blue-300 p-3 text-2x2 rounded-2xl m-2' >Search Destination</button> }
-                {destination && <button onClick={handleFlightPath} className='bg-blue-300 p-3 font-medium text-2x2 rounded-2xl m-2'>Let's Fly</button>}
+        <div className='h-full flex flex-col relative'>
+            <div className='flex flex-row z-1000 items-center justify-center p-3 gap-5 '>
+                <input value={city} onChange={handleCityInput} type="text" placeholder='Enter city name' className=' border-b outline-none backdrop-blur-xs p-2 text-2x2 rounded-2xl m-2'/>
+                <input value={focusTime} onChange={handleInputTime} type="number" placeholder='Focus time' className='border-b outline-none backdrop-blur-xs p-2 text-2x2 rounded-2xl m-2'/>
+                {!destination && <button onClick={handleSearchAirport} className='backdrop-blur-xs border-b p-3 text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150' >Search Destination</button> }
+                {destination && <button onClick={handleFlightPath} className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150'>Let's Fly</button>}
             </div>
-
             <Map
                 dataOrigin = {dataOrigin}
                 availableAirports = {availableAirports}
                 destination = {destination}
                 setDestination = {setDestination}
                 progress = {progress}
-            /> {/* Props for the Map.jsx*/}                 
+            /> {/* Props for the Map.jsx*/}  
+               
 
             
-            <div className='flex flex-row justify-center gap-5 text-4xl bg-blue-200 p-3'>
+            <div className='flex flex-row justify-center gap-5 text-3xl p-4 z-1000 absolute bottom-10 left-1/2 transform -translate-x-1/2 backdrop-blur-xs rounded-4xl'>
                 {formatTime()} {/* If its running lets format the time and show it*/}
-                <button onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
-                <button onClick={handleReset}>Reset</button>
+                <button className='hover:scale-115 transition-all duration-150' onClick={handlePause}> {isRunning? "Pause" : seconds > 0 ? "Resume": null}</button>
+                <button className='hover:scale-115 transition-all duration-150' onClick={handleReset}>Reset</button>
                 <audio ref={audioRef} src='/sounds/50min-2.mp3' />
             </div>
         </div>
