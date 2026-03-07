@@ -58,7 +58,7 @@ I use Pomodoros every day to stay focused,listening to plane sounds, and I also 
 
 ## Run Locally
 
-git clone https://github.com/alejandroc0de/React/main/flight-pomodoro
+git clone [https://github.com/alejandroc0de/React/main/flight-pomodoro](https://github.com/alejandroc0de/React/tree/main/flight-pomodoro)
 cd flight-pomodoro
 npm install
 npm run dev
