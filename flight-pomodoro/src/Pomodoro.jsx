@@ -74,14 +74,10 @@ function Pomodoro(){
         setPomodoroStatus("Focus")
     }
 
-
-
-
-
-
     return(
         <div className="h-full flex flex-col  items-center bg-beige-pomodoro">
             <div className="flex-1 flex flex-col items-center justify-center py-20">  
+                
                 <div id="Div for top items">
                     <h1 className="font-Bungee One text-3xl text-center font-medium text-gray-500 hover:scale-125 transition-all duration-150">Pomodoro</h1>
                 </div>   

@@ -50,7 +50,7 @@ function Focus(){
             setIsRunning(false)
             setSeconds(0)
             setCity("")
-            setLanded(true)
+            setLanded(true) // landed is used for the conditional message on arrival 
             setFocusTime("")
             setAvailableAirports([])            
         }
@@ -62,6 +62,8 @@ function Focus(){
         setCity(event.target.value)
     }
 
+
+    // methods for ignoring tildes and accents on the data base
     function handleSearchAirport(){
         const data = LargeAirports.find(a => a.municipality.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"") === city.toLowerCase()) // We find the airport by city name
         if(data == undefined){
@@ -114,7 +116,6 @@ function Focus(){
 
 
     // CREATE TIMER FOR FLIGTH PLAN 
-
     function handleFlightPath(){
         if(isRunning){
             return
@@ -139,6 +140,7 @@ function Focus(){
         }
     }
 
+    // I set landed to false so the conditional dissapears from the screen
     function handleReset(){
         setLanded(false)
         setIsRunning(false)
@@ -149,8 +151,7 @@ function Focus(){
         setAvailableAirports([])
     }
 
-
-
+    // For the layout, we use relative positions to be able to place the inputs within the map
     return(
         <div className='h-full flex flex-col relative'>
             <div className='flex flex-row z-1000 items-center justify-center p-3 gap-5 '>
@@ -160,6 +161,7 @@ function Focus(){
                 {destination && !isRunning && <button onClick={handleFlightPath} className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2 hover:scale-115 transition-all duration-150'>Let's Fly</button>}
                 {destination && isRunning && <button className='backdrop-blur-md p-3 border-b font-medium text-2x2 rounded-2xl m-2' >Flight time : {destination.flightTime} mins</button>}
             </div>
+
             <div id='conditionalMessage'>
                 {landed && <div className='flex absolute border-2 inset-0 z-50 items-center justify-center backdrop-blur-md'>
                     <div className='text-center'>
@@ -168,7 +170,6 @@ function Focus(){
                                 </div>
                     </div> 
                 }
-
             </div>
 
             <Map
