@@ -1,6 +1,9 @@
-# ✈️ Flight-Pomodoro
+# Flight-Pomodoro
 
-A productivity app that combines the Pomodoro technique with real-time flight tracking. Instead of staring at a countdown, you watch a plane fly from one real airport to another — and it lands exactly when your focus session ends.
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/201bf4ad-9129-4dcd-b852-8bb0280abb9c" />
+
+
+A productivity app that combines the Pomodoro technique with real-time flight tracking. Instead of staring at a countdown, you watch a plane fly from one real airport to another — and it lands exactly when your focus session ends. You can also use the basic pomodoro :)
 
 **https://flight-pomodoro.netlify.app/focus**
 
@@ -21,6 +24,9 @@ I use Pomodoros every day to stay focused,listening to plane sounds, and I also 
 - **Dynamic destinations** — airports shown are filtered by your exact focus time (±10 min)
 - **Flight sounds** — Ambient cabin audio plays during your focus session
 - **Arrival celebration** — A success sound and message when the plane lands
+
+  <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/95d9a21d-fbc3-459e-8ed8-a2121582f47c" />
+
 
 ---
 
@@ -47,9 +53,12 @@ I use Pomodoros every day to stay focused,listening to plane sounds, and I also 
 
 ---
 
+<img width="1920" height="1076" alt="image" src="https://github.com/user-attachments/assets/7101b3c4-d0d0-4870-b3ab-f53f99599fb1" />
+
+
 ## Run Locally
 
-git clone https://github.com/yourusername/flight-pomodoro
+git clone https://github.com/alejandroc0de/React/main/flight-pomodoro
 cd flight-pomodoro
 npm install
 npm run dev
